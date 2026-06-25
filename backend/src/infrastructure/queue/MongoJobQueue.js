@@ -109,7 +109,7 @@ export class MongoJobQueue {
     }
 
     try {
-      await this.collection.insertOne(job);
+      await this.collection.insertOne(structuredClone(job));
       return Object.freeze({ created: true, job });
     } catch (error) {
       if (error?.code !== 11000) {
