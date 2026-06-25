@@ -1,0 +1,53 @@
+{
+  "name": "ai-enriched-financial-audit-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend foundation for the AI-Enriched Financial Audit Pipeline.",
+  "type": "module",
+  "main": "src/bootstrap/ApiBootstrap.js",
+  "engines": {
+    "node": ">=22.0.0",
+    "npm": ">=10.0.0"
+  },
+  "scripts": {
+    "start": "npm run start:server",
+    "start:server": "node src/bootstrap/ApiBootstrap.js",
+    "start:worker": "node src/bootstrap/WorkerBootstrap.js",
+    "dev": "npm run dev:server",
+    "dev:server": "nodemon --config nodemon.json src/bootstrap/ApiBootstrap.js",
+    "dev:worker": "nodemon --config nodemon.json src/bootstrap/WorkerBootstrap.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "test": "node --test --experimental-test-isolation=none",
+    "check": "npm run lint && npm run format:check && npm test"
+  },
+  "imports": {
+    "#app/*": "./src/app/*.js",
+    "#bootstrap/*": "./src/bootstrap/*.js",
+    "#config/*": "./src/config/*.js",
+    "#database/*": "./src/infrastructure/database/*.js",
+    "#logging/*": "./src/infrastructure/logging/*.js",
+    "#monitoring/*": "./src/infrastructure/monitoring/*.js",
+    "#shared/*": "./src/shared/*.js"
+  },
+  "dependencies": {
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "mongodb": "^6.20.0",
+    "pino": "^10.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.5.0",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.7.4",
+    "supertest": "^7.1.4"
+  }
+}

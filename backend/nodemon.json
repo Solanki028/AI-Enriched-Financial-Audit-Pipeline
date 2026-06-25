@@ -1,0 +1,7 @@
+{
+  "delay": 250,
+  "ext": "js,json",
+  "ignore": ["coverage", "logs", "node_modules", "test"],
+  "signal": "SIGTERM",
+  "watch": ["src"]
+}
