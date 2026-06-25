@@ -16,10 +16,12 @@ export class WorkerBootstrap {
   async run() {
     this.lifecycle.register();
     await this.container.mongoConnection.connect();
-    this.logger.info({}, 'Worker process foundation initialized.');
+    await this.container.mongoIndexManager.ensureIndexes();
+    await this.container.workerApplication.start();
   }
 
   async shutdown() {
+    await this.container.workerApplication.stop();
     await this.container.mongoConnection.close();
   }
 

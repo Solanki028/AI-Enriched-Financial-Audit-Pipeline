@@ -91,7 +91,10 @@ export class MongoAnalysisRepository {
 
     return documents
       .map((document) => ({
-        entry: document.entrySummary ?? { companyId: document.companyId, description: document.description },
+        entry: document.entrySummary ?? {
+          companyId: document.companyId,
+          description: document.description,
+        },
         entryId: document.entryId,
         similarityScore: this.#cosineSimilarity(vector, document[vectorField]),
       }))
@@ -142,11 +145,12 @@ export class MongoAnalysisRepository {
   }
 
   async #syncEntrySummary(entryId, sourceRevision, summary) {
-    await this.entryRepository?.markProcessingStatus?.(entryId, sourceRevision, summary.processingStatus);
+    await this.entryRepository?.updateAnalysisSummary?.(entryId, sourceRevision, summary);
   }
 
   #plainAnalysis(analysis) {
-    const plain = typeof analysis.toJSON === 'function' ? analysis.toJSON() : structuredClone(analysis);
+    const plain =
+      typeof analysis.toJSON === 'function' ? analysis.toJSON() : structuredClone(analysis);
     const vectors = plain.vectors ?? {};
     return {
       ...plain,
@@ -157,7 +161,8 @@ export class MongoAnalysisRepository {
   }
 
   #toAnalysis(document) {
-    const { _id, ...analysis } = document;
+    const analysis = { ...document };
+    delete analysis._id;
     return Object.freeze(analysis);
   }
 

@@ -51,9 +51,13 @@ export class JobService {
     }
 
     const depth = await this.jobQueue.getDepth();
+    const metrics = this.processingMetrics
+      ? await this.processingMetrics.snapshot(this.jobQueue)
+      : null;
+
     return Object.freeze({
       activeJobs: depth,
-      metrics: this.processingMetrics?.snapshot?.() ?? null,
+      metrics,
       status: 'available',
     });
   }

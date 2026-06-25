@@ -34,6 +34,10 @@ export class MongoAuditRepository {
       filter.correlationId = query.correlationId;
     }
 
-    return this.collection.find(filter, { projection: { _id: 0 } }).sort({ occurredAt: -1 }).limit(100).toArray();
+    return this.collection
+      .find(filter, { projection: { _id: 0 } })
+      .sort({ occurredAt: -1 })
+      .limit(100)
+      .toArray();
   }
 }

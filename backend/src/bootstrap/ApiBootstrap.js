@@ -16,6 +16,7 @@ export class ApiBootstrap {
   async run() {
     this.lifecycle.register();
     await this.container.mongoConnection.connect();
+    await this.container.mongoIndexManager.ensureIndexes();
     await this.container.server.start();
   }
 

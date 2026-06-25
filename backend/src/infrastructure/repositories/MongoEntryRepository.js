@@ -44,7 +44,9 @@ export class MongoEntryRepository {
 
   async findMigrationCandidates(filters = {}) {
     const query = this.#buildFilter(filters);
-    return (await this.collection.find(query).toArray()).map((document) => this.#toEntity(document));
+    return (await this.collection.find(query).toArray()).map((document) =>
+      this.#toEntity(document),
+    );
   }
 
   async findDashboard({ filters = {}, page, pageSize, sortBy, sortDirection }) {
@@ -96,6 +98,22 @@ export class MongoEntryRepository {
     return result ? this.#toEntity(result) : null;
   }
 
+  async updateAnalysisSummary(entryId, sourceRevision, summary) {
+    const result = await this.collection.updateOne(
+      { entryId, sourceRevision },
+      {
+        $set: {
+          processingStatus: summary.processingStatus,
+          riskScore: summary.riskScore,
+          severity: summary.severity,
+          updatedAt: this.now(),
+        },
+      },
+    );
+
+    return result.matchedCount === 1;
+  }
+
   async markProcessingStatus(entryId, sourceRevision, processingStatus) {
     const result = await this.collection.updateOne(
       { entryId, sourceRevision },
@@ -144,7 +162,8 @@ export class MongoEntryRepository {
   }
 
   #toEntity(document) {
-    const { _id, ...entity } = document;
+    const entity = { ...document };
+    delete entity._id;
     return Object.freeze(entity);
   }
 }
