@@ -10,10 +10,12 @@ import { RequestIdMiddleware } from './middleware/RequestIdMiddleware.js';
 import { RequestLoggingMiddleware } from './middleware/RequestLoggingMiddleware.js';
 
 export class Application {
-  constructor({ applicationConfig, healthMonitor, logger }) {
+  constructor({ apiRouter = null, applicationConfig, healthMonitor, logger, openApiSpec = null }) {
     this.config = applicationConfig;
+    this.apiRouter = apiRouter;
     this.healthMonitor = healthMonitor;
     this.logger = logger;
+    this.openApiSpec = openApiSpec;
     this.express = express();
     this.requestIdMiddleware = new RequestIdMiddleware();
     this.requestLoggingMiddleware = new RequestLoggingMiddleware(logger);
@@ -41,6 +43,17 @@ export class Application {
     this.express.use(compression());
     this.express.use(express.json({ limit: this.config.jsonLimit }));
     this.express.get('/health', this.healthMonitor.handle);
+
+    if (this.openApiSpec) {
+      this.express.get('/api/docs/openapi.json', (_request, response) => {
+        response.json(this.openApiSpec);
+      });
+    }
+
+    if (this.apiRouter) {
+      this.express.use('/api', this.apiRouter);
+    }
+
     this.express.use(this.notFoundHandler.handle);
     this.express.use(this.errorHandler.handle);
   }

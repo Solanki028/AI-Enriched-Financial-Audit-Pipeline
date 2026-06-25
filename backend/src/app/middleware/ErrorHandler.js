@@ -26,10 +26,12 @@ export class ErrorHandler {
     const body = {
       error: {
         code: normalizedError.code,
+        errorCode: normalizedError.code,
         message: normalizedError.isOperational
           ? normalizedError.message
           : 'An unexpected error occurred.',
         requestId: request.requestId,
+        timestamp: new Date().toISOString(),
       },
     };
 
