@@ -12,6 +12,7 @@ export class ScriptBootstrap {
     }
 
     await this.container.mongoConnection.connect();
+    await this.container.mongoIndexManager.ensureIndexes();
 
     try {
       this.logger.info({ script: script.constructor.name }, 'Administrative script started.');
