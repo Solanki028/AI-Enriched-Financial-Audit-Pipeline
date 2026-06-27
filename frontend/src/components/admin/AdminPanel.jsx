@@ -3,11 +3,32 @@ import { Component } from 'react';
 export class AdminPanel extends Component {
   constructor(props) {
     super(props);
-    this.state = { entryIds: '', migrationVersion: 'v1.0' };
+    this.state = {
+      entryIds: '',
+      migrationScope: 'selected',
+      recalculationScope: 'selected',
+      versions: {
+        anomaly: 'v1.0',
+        compliance: 'v1.0',
+        entityVector: 'v1.0',
+        financialVector: 'v1.0',
+        risk: 'v1.0',
+        semanticVector: 'v1.0',
+      },
+    };
   }
 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleVersionChange = (event) => {
+    this.setState({
+      versions: {
+        ...this.state.versions,
+        [event.target.name]: event.target.value,
+      },
+    });
   };
 
   entryIds() {
@@ -15,6 +36,23 @@ export class AdminPanel extends Component {
       .split(',')
       .map((item) => item.trim())
       .filter(Boolean);
+  }
+
+  buildCommand(scope) {
+    if (scope === 'all') {
+      return { scope: 'all' };
+    }
+
+    return { entryIds: this.entryIds() };
+  }
+
+  renderVersionInputs() {
+    return Object.entries(this.state.versions).map(([name, value]) => (
+      <label key={name}>
+        {name}
+        <input name={name} onChange={this.handleVersionChange} value={value} />
+      </label>
+    ));
   }
 
   render() {
@@ -32,13 +70,26 @@ export class AdminPanel extends Component {
           className="form-card compact"
           onSubmit={(event) => {
             event.preventDefault();
-            this.props.onRiskRecalculation({ entryIds: this.entryIds() });
+            this.props.onRiskRecalculation(
+              this.buildCommand(this.state.recalculationScope),
+            );
           }}
         >
-          <h3>Partial Risk Recalculation</h3>
+          <h3 className="span-2">Partial Risk Recalculation</h3>
           <label>
+            Scope
+            <select
+              name="recalculationScope"
+              onChange={this.handleChange}
+              value={this.state.recalculationScope}
+            >
+              <option value="selected">Selected entries</option>
+              <option value="all">All migration candidates</option>
+            </select>
+          </label>
+          <label className="span-2">
             Entry IDs, comma-separated
-            <input
+            <textarea
               name="entryIds"
               onChange={this.handleChange}
               value={this.state.entryIds}
@@ -53,20 +104,24 @@ export class AdminPanel extends Component {
           onSubmit={(event) => {
             event.preventDefault();
             this.props.onModelMigration({
-              entryIds: this.entryIds(),
-              targetVersions: { risk: this.state.migrationVersion },
+              ...this.buildCommand(this.state.migrationScope),
+              targetVersions: this.state.versions,
             });
           }}
         >
-          <h3>Model Migration</h3>
+          <h3 className="span-2">Model Migration</h3>
           <label>
-            Target Risk Version
-            <input
-              name="migrationVersion"
+            Scope
+            <select
+              name="migrationScope"
               onChange={this.handleChange}
-              value={this.state.migrationVersion}
-            />
+              value={this.state.migrationScope}
+            >
+              <option value="selected">Selected entries</option>
+              <option value="all">All migration candidates</option>
+            </select>
           </label>
+          {this.renderVersionInputs()}
           <button className="button secondary" type="submit">
             Queue Migration
           </button>

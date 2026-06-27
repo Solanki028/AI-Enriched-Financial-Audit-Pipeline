@@ -297,3 +297,83 @@ pre {
     overflow-x: auto;
   }
 }
+
+.pagination-controls,
+.sort-controls {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.pagination-controls span {
+  color: #48566e;
+  font-weight: 800;
+  padding: 10px 0;
+}
+
+.entry-inspector {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.update-form {
+  margin-top: 0;
+}
+
+.analysis-panel {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.metric-grid,
+.vector-summary {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.metric-card {
+  background: #ffffff;
+  border: 1px solid #e3e8f2;
+  border-radius: 14px;
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+}
+
+.metric-card span {
+  color: #66758e;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.metric-card strong {
+  color: #172033;
+  font-size: 20px;
+}
+
+.analysis-list {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.analysis-list li {
+  background: #ffffff;
+  border: 1px solid #e3e8f2;
+  border-radius: 12px;
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+}
+
+.analysis-list span {
+  color: #66758e;
+}
