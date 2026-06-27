@@ -2,7 +2,7 @@
 
 > If you want to understand the complete application flow visually, start here: [PROJECT_FLOW.md](./PROJECT_FLOW.md). It explains the user journey, backend internals, queue, worker, MongoDB collections, AI analysis pipeline, and frontend integration with diagrams.
 
-Production-grade MERN assessment project for an AI-Enriched Financial Audit Pipeline.
+Production-grade MERN project for an AI-Enriched Financial Audit Pipeline.
 
 ## Current Status
 
