@@ -1,0 +1,21 @@
+{
+  "name": "ai-enriched-financial-audit-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade MERN assessment project for an AI-Enriched Financial Audit Pipeline.",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "seed": "npm run seed --prefix backend",
+    "migrate:models": "npm run migrate:models --prefix backend",
+    "start:server": "npm run start:server --prefix backend",
+    "start:worker": "npm run start:worker --prefix backend",
+    "start:client": "npm run dev --prefix frontend",
+    "check:backend": "npm run check --prefix backend",
+    "check:frontend": "npm run check --prefix frontend",
+    "check": "npm run check:backend && npm run check:frontend"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "npm": ">=10.0.0"
+  }
+}
