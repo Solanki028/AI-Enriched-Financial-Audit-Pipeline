@@ -12,7 +12,7 @@ export class EntryNormalizer {
       credit: this.#toFiniteNumber(entry.credit, 'credit'),
       debit: this.#toFiniteNumber(entry.debit, 'debit'),
       description: this.#toString(entry.description),
-      postingDate: this.#toIsoDate(entry.postingDate),
+      postingDate: this.#toIsoDate(entry.postingDate ?? entry.transactionDate ?? entry.createdAt),
     });
   }
 
