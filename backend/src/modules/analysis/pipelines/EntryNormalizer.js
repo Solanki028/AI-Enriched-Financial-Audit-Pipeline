@@ -8,9 +8,9 @@ export class EntryNormalizer {
 
     return Object.freeze({
       ...entry,
-      amount: this.#toFiniteNumber(entry.amount, 'amount'),
-      credit: this.#toFiniteNumber(entry.credit, 'credit'),
-      debit: this.#toFiniteNumber(entry.debit, 'debit'),
+      amount: this.#toFiniteNumber(entry.amount ?? entry.debit ?? entry.credit ?? 0, 'amount'),
+      credit: this.#toFiniteNumber(entry.credit ?? 0, 'credit'),
+      debit: this.#toFiniteNumber(entry.debit ?? 0, 'debit'),
       description: this.#toString(entry.description),
       postingDate: this.#toIsoDate(entry.postingDate ?? entry.transactionDate ?? entry.createdAt),
     });
