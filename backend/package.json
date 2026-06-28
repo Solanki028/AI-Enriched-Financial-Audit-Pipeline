@@ -23,7 +23,8 @@
     "test": "node --test --experimental-test-isolation=none",
     "check": "npm run lint && npm run format:check && npm test",
     "seed": "node src/scripts/SeedDatabaseScript.js",
-    "migrate:models": "node src/scripts/ModelMigrationScript.js"
+    "migrate:models": "node src/scripts/ModelMigrationScript.js",
+    "recalculate:rules": "node src/scripts/PartialRecalculationScript.js"
   },
   "imports": {
     "#app/*": "./src/app/*.js",
