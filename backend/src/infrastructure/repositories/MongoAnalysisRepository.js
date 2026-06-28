@@ -107,11 +107,18 @@ export class MongoAnalysisRepository {
       return false;
     }
 
+    const entry = this.entryRepository ? await this.entryRepository.findById(entryId) : null;
+    const entrySummary = entry ? {
+      companyId: entry.companyId,
+      description: entry.description,
+    } : undefined;
+
     const document = {
       ...this.#plainAnalysis(analysis),
       analysisMode: mode,
       createdAt: this.now(),
       entryId,
+      entrySummary,
       sourceRevision,
       stale: false,
       updatedAt: this.now(),
