@@ -227,6 +227,47 @@ curl -X POST http://127.0.0.1:4000/api/admin/model-migrations \
   -d '{"scope":"all","targetVersions":{"risk":"v1.1","anomaly":"v1.1","compliance":"v1.1","semanticVector":"v1.1","financialVector":"v1.1","entityVector":"v1.1"}}'
 ```
 
+## Regulatory Shifts / Partial Recalculation Trigger (Scenario D)
+
+When compliance rules or thresholds shift, you can trigger partial risk recalculation (leaving vector attributes untouched) in two ways.
+
+### Option A - CLI Command
+
+From the project root:
+
+```bash
+npm run recalculate:rules
+```
+
+Equivalent backend command:
+
+```bash
+cd backend
+npm run recalculate:rules
+```
+
+This queues partial_risk jobs for all entries. The worker processes them asynchronously without re-generating vectors.
+
+### Option B - API Endpoint
+
+PowerShell example:
+
+```powershell
+$body = @{
+  scope = 'all'
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri http://127.0.0.1:4000/api/admin/risk-recalculations -Method Post -Body $body -ContentType 'application/json'
+```
+
+curl example:
+
+```bash
+curl -X POST http://127.0.0.1:4000/api/admin/risk-recalculations \
+  -H "Content-Type: application/json" \
+  -d '{"scope":"all"}'
+```
+
 ## Health and Verification Commands
 
 ### API Health
