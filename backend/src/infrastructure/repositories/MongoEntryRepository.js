@@ -21,6 +21,7 @@ export class MongoEntryRepository {
   async create(entry) {
     const now = this.now();
     const document = {
+      amount: entry.amount ?? entry.debit ?? entry.credit ?? 0,
       postingDate: entry.postingDate ?? now.toISOString(),
       ...structuredClone(entry),
       createdAt: now,
