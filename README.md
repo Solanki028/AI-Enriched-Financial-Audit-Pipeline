@@ -50,33 +50,14 @@ copy frontend\.env.example frontend\.env
 
 ### Backend .env Parameters
 
-| Variable                            | Purpose                     | Example                                      |
-| ----------------------------------- | --------------------------- | -------------------------------------------- |
-| NODE_ENV                            | Runtime mode                | development                                  |
-| APP_HOST                            | API bind host               | 127.0.0.1                                    |
-| APP_PORT                            | API port                    | 4000                                         |
-| APP_JSON_LIMIT                      | Express JSON body limit     | 1mb                                          |
-| CORS_ORIGINS                        | Allowed frontend origins    | http://127.0.0.1:5173,http://localhost:5173  |
-| MONGODB_URI                         | MongoDB connection URI      | mongodb://127.0.0.1:27017                    |
-| MONGODB_DB_NAME                     | Database name               | financial_audit                              |
-| MONGODB_MIN_POOL_SIZE               | Mongo connection min pool   | 1                                            |
-| MONGODB_MAX_POOL_SIZE               | Mongo connection max pool   | 20                                           |
-| MONGODB_CONNECT_TIMEOUT_MS          | Mongo connect timeout       | 10000                                        |
-| MONGODB_SERVER_SELECTION_TIMEOUT_MS | Server selection timeout    | 5000                                         |
-| MONGODB_CONNECT_RETRY_ATTEMPTS      | Startup retry count         | 5                                            |
-| MONGODB_CONNECT_RETRY_BASE_DELAY_MS | Retry base delay            | 500                                          |
-| QUEUE_POLL_INTERVAL_MS              | Worker polling interval     | 500                                          |
-| QUEUE_IDLE_BACKOFF_MAX_MS           | Worker idle backoff max     | 5000                                         |
-| QUEUE_LEASE_DURATION_MS             | Job lease duration          | 30000                                        |
-| QUEUE_MAX_ATTEMPTS                  | Job retry attempt limit     | 3                                            |
-| QUEUE_RETRY_BASE_DELAY_MS           | Retry backoff base delay    | 1000                                         |
-| PROCESSING_MODEL_DELAY_MS           | Simulated processing delay  | 400                                          |
-| PROCESSING_WORKER_CONCURRENCY       | Worker parallelism          | 4                                            |
-| PROCESSING_MIGRATION_BATCH_SIZE     | Migration batch size config | 100                                          |
-| PROCESSING_QUEUE_BACKPRESSURE_LIMIT | Queue pressure threshold    | 1000                                         |
-| LOG_LEVEL                           | Logger level                | info                                         |
-| LOG_SERVICE_NAME                    | Service name in logs        | financial-audit-backend                      |
-| LOG_REDACT_PATHS                    | Sensitive log paths         | req.headers.authorization,req.headers.cookie |
+| Variable                  | Purpose                                    | Example                                     |
+| ------------------------- | ------------------------------------------ | ------------------------------------------- |
+| APP_HOST                  | API bind host                              | 127.0.0.1                                   |
+| APP_PORT                  | API port                                   | 4000                                        |
+| CORS_ORIGINS              | Allowed frontend origins                   | http://127.0.0.1:5173,http://localhost:5173 |
+| MONGODB_URI               | MongoDB connection URI                     | mongodb://127.0.0.1:27017                   |
+| MONGODB_DB_NAME           | Database name                              | financial_audit                             |
+| PROCESSING_MODEL_DELAY_MS | (Optional) Simulated processing delay (ms) | 400                                         |
 
 ### Frontend .env Parameters
 
