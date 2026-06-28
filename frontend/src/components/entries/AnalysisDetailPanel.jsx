@@ -22,6 +22,42 @@ export class AnalysisDetailPanel extends Component {
     );
   }
 
+  renderTriggeredRules(rules) {
+    if (!rules || rules.length === 0) {
+      return <p className="muted">No risk rules triggered.</p>;
+    }
+
+    return (
+      <ul className="analysis-list">
+        {rules.map((item, index) => {
+          let title = item.rule;
+          let description = `Weight: ${item.weight}`;
+
+          if (item.rule === 'debit_credit_mismatch') {
+            title = 'Debit/Credit Mismatch';
+            description = `Debit (${Formatters.currency(item.metadata?.debit)}) and Credit (${Formatters.currency(item.metadata?.credit)}) do not balance. Difference is ${Formatters.currency(item.metadata?.difference)}.`;
+          } else if (item.rule === 'unusually_large_amount') {
+            title = 'Unusually Large Amount';
+            description = `Entry amount (${Formatters.currency(item.metadata?.absoluteAmount)}) exceeds threshold limit of ${Formatters.currency(item.metadata?.threshold)}.`;
+          } else if (item.rule === 'suspicious_description') {
+            title = 'Suspicious Description';
+            description = `Description contains audit flag terms: ${item.metadata?.matchedTerms?.join(', ') || ''}.`;
+          } else if (item.rule === 'unusual_posting_time') {
+            title = 'Unusual Posting Time';
+            description = `Audit flag: Entry posted on hour ${item.metadata?.hour}:00 UTC (Weekend: ${item.metadata?.isWeekend ? 'Yes' : 'No'}).`;
+          }
+
+          return (
+            <li key={item.rule ?? index}>
+              <strong>{title}</strong>
+              <span>{description}</span>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
+
   renderVectorSummary(analysis) {
     const vectors = [
       ['Semantic', analysis.semanticVector],
@@ -54,7 +90,7 @@ export class AnalysisDetailPanel extends Component {
           <div className="metric-grid">
             <div className="metric-card">
               <span>Risk Score</span>
-              <strong>{Formatters.percent(analysis.riskScore)}</strong>
+              <strong>{Formatters.score(analysis.riskScore)}</strong>
             </div>
             <div className="metric-card">
               <span>Severity</span>
@@ -72,7 +108,7 @@ export class AnalysisDetailPanel extends Component {
         </article>
         <article className="card">
           <h3>Triggered Risk Rules</h3>
-          {this.renderList(analysis.triggeredRules, 'No risk rules triggered.')}
+          {this.renderTriggeredRules(analysis.triggeredRules)}
         </article>
         <article className="card">
           <h3>Compliance</h3>
