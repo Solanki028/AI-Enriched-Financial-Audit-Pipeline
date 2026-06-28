@@ -39,7 +39,7 @@ export class EntryTable extends Component {
                     entry.currency,
                   )}
                 </td>
-                <td>{Formatters.percent(entry.riskScore)}</td>
+                <td>{Formatters.score(entry.riskScore)}</td>
                 <td>
                   <StatusBadge value={entry.severity ?? 'UNKNOWN'} />
                 </td>

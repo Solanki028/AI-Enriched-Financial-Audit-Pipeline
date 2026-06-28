@@ -31,4 +31,12 @@ export class Formatters {
       style: 'percent',
     }).format(Number(value));
   }
+
+  static score(value) {
+    if (!Number.isFinite(Number(value))) {
+      return '—';
+    }
+
+    return Number(value).toFixed(2);
+  }
 }

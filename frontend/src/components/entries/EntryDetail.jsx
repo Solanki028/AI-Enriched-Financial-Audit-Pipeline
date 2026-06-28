@@ -47,7 +47,7 @@ export class EntryDetail extends Component {
             {analysis ? (
               <dl>
                 <dt>Risk</dt>
-                <dd>{Formatters.percent(analysis.riskScore)}</dd>
+                <dd>{Formatters.score(analysis.riskScore)}</dd>
                 <dt>Severity</dt>
                 <dd>
                   <StatusBadge value={analysis.severity} />
